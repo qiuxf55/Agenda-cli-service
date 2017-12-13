@@ -16,13 +16,15 @@ func User_ReadFromFile() []User{
     var user User
     sql := "select * from User"
     results, _ := engine.Query(sql)
-    if results[0]["Name"] != nil {
-        for i := 0; i < len(results); i++ {
-        user.Name = string(results[i]["Name"][:])
-        user.Password = string(results[i]["Password"][:])
-        user.Email = string(results[i]["Email"][:])
-        user.Phone = string(results[i]["Phone"][:])
-        tmp = append(tmp,user)
+    if (len(results) > 0) {
+        if results[0]["Name"] != nil {
+            for i := 0; i < len(results); i++ {
+            user.Name = string(results[i]["Name"][:])
+            user.Password = string(results[i]["Password"][:])
+            user.Email = string(results[i]["Email"][:])
+            user.Phone = string(results[i]["Phone"][:])
+            tmp = append(tmp,user)
+            }
         }
     }
     return tmp
@@ -41,22 +43,25 @@ func Meeting_ReadFromFile() []Meeting{
     var met Meeting
     sql := "select * from Met"
     results, _ := engine.Query(sql)
-    if results[0]["Sponsor"] != nil {
-        for i := 0; i < len(results); i++ {
-            met.Sponsor = string(results[i]["Sponsor"][:])
-            met.Title = string(results[i]["Title"][:])
-            kk := StringToDate(string(results[i]["Start"][:]))
-            met.Start = kk
-            gg := StringToDate(string(results[i]["End"][:]))
-            met.End = gg
-            participator := string(results[i]["Participators"][:])
-            tt := strings.Split(participator,",")
-            for j:=0; j < len(tt); j++ {
-                met.Participator = append(met.Participator, tt[j])
+    if (len(results) > 0) {
+        if results[0]["Title"] != nil {
+            for i := 0; i < len(results); i++ {
+                met.Sponsor = string(results[i]["Sponsor"][:])
+                met.Title = string(results[i]["Title"][:])
+                kk := StringToDate(string(results[i]["Start"][:]))
+                met.Start = kk
+                gg := StringToDate(string(results[i]["End"][:]))
+                met.End = gg
+                participator := string(results[i]["Participators"][:])
+                tt := strings.Split(participator,",")
+                for j:=0; j < len(tt); j++ {
+                    met.Participator = append(met.Participator, tt[j])
+                }
+                tmp = append(tmp,met)
             }
-            tmp = append(tmp,met)
         }
     }
+    
     
     return tmp
 }
