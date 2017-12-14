@@ -1,0 +1,160 @@
+FORMAT: 1A
+HOST: http://agenda19.apiblueprint.org/
+
+# Agenda
+
+Agenda is a simple API allowing consumers to schedule meeting on-line
+
+# Group Admins
+
+Resource operations related to admins in the API.
+
+## Admin [/v1/admin{?key}]
+
++ Parameters
+    - key : `1e3576bt` (required)
+
+### Delete User [DELETE /v1/admin/delete/{name}]
+
+Delete a exist user
+
++ Parameters
+    - name  : `zhang3` (string, required)
+
+
++ Response 204
+
+
+
+
+# Group Users
+
+Resources related to  users in the API.
+
+## Users Collection [/v1/users]
+
+
+### List all Users [GET]
+
++ Response 200 (application/json)
+
+        [
+            {
+                "username":"zhang3",
+                "password":"zhang",
+                "email":"zhang@qq.com",
+                "phone":"1111111"
+            },{
+                "username":"li4",
+                "password":"li",
+                "email":"li4@mail2.sysu.edu.cn",
+                "phone":"12345678901"
+            }
+        ]
+
+### Register [POST]
+
++ Request (application/json)
+
+        {
+            "username":"zhang3",
+            "password":"zhang",
+            "email":"zhang@qq.com",
+            "phone":"1111111"
+        }
+
++ Response 201 (application/json)
+
+    + Headers
+
+            Location: /users/zhang3
+
+    + Body
+
+            {
+                "username":"zhang3",
+                "email":"zhang3@mail2.sysu.edu.cn",
+                "phone":"12345678901"
+            }
+
+### Get User by Name [GET /v1/users/{name}]
+
++ Parameters
+    - name : `zhang3` (string, required) - User Name
+
++ Response 200 (application/json)
+
+        {
+            "username":"zhang3",
+            "password":"zhang",
+            "email":"zhang3@mail2.sysu.edu.cn"
+        }
+
+# Group Meetings
+
+Resources related to  Meetings in the API.
+
+## Meetings Collection [/v1/meetings]
+
+
+### List all Meetings [GET /v1/meetings{?name}]
+
++ Parameters
+    - name : `zhang3`  (string, required) - User Name
+
++ Response 200 (application/json)
+
+        [
+            {
+                "Sponsor":"zhang3",
+                "Participators":["zhang"]
+                "Title":"go",
+                "StartDate": 2017-11-11/11:11,
+                "EndDate": 2017-11-11/11:12,
+            }
+        ]
+
+### Create a New Meeting [POST]
+
++ Request (application/json)
+
+        {
+            "Sponsor": "zhang",
+            "Participators":["zhang"],
+            "Title":"go",
+            "StartDate": 2017-11-11/11:11,
+            "EndDate": 2017-11-11/11:12,
+        }
+
++ Response 201 (application/json)
+
+    + Headers
+
+            Location: /meetings/hhh
+
+    + Body
+
+            {
+                "Sponsor":"zhang3",
+                "Participators":["zhang"]
+                "Title":"hhh",
+                "StartDate": 2017-11-11/11:11,
+                "EndDate": 2017-11-11/11:12,
+                "error":none
+            }
+
+
+### Get meeting by Title [GET /v1/meetings/{title}]
+
++ Parameters
+    - title : `hhh` (string, required) - Meeting title
+
++ Response 200 (application/json)
+
+        {
+            "Sponsor":"zhang3",
+            "Participators":["zhang"]
+            "Title":"hhh",
+            "StartDate": 2017-11-11/11:11,
+            "EndDate": 2017-11-11/11:12,
+        }
